@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Are You Really Spending?</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Arial, sans-serif; background:#f7f3ef; color:#262626; }
+  .wrap { max-width:720px; margin:auto; padding:28px 18px 50px; }
+  .card { background:white; border-radius:22px; padding:28px; box-shadow:0 8px 30px rgba(0,0,0,.08); margin-top:18px; }
+  h1 { font-size:38px; line-height:1.05; margin:8px 0 14px; }
+  h2 { margin-top:0; }
+  .eyebrow { font-weight:700; letter-spacing:1.5px; font-size:12px; text-transform:uppercase; }
+  .sub { font-size:18px; line-height:1.5; color:#555; }
+  label { display:block; font-weight:700; margin:18px 0 7px; }
+  input { width:100%; padding:14px; border:1px solid #ccc; border-radius:12px; font-size:17px; }
+  button { width:100%; margin-top:22px; padding:15px; border:0; border-radius:12px; font-size:17px; font-weight:700; cursor:pointer; background:#222; color:white; }
+  .result { display:none; margin-top:24px; padding:22px; border-radius:16px; background:#f1ebe5; }
+  .big { font-size:36px; font-weight:800; margin:6px 0; }
+  .cta { margin-top:18px; font-size:14px; color:#666; }
+  .share { margin-top:16px; padding:12px; background:#fff; border-radius:12px; border:1px solid #ddd; cursor:pointer; width:100%; }
+  .small { font-size:13px; color:#777; line-height:1.45; margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="eyebrow">A Tiny Experiment</div>
+    <h1>What is one small expense really costing you?</h1>
+    <p class="sub">Enter a monthly expense and see what it adds up to over a year — then decide whether it's worth keeping.</p>
+
+    <label for="name">What should we call this expense?</label>
+    <input id="name" placeholder="Examples: subscriptions, takeout, coffee">
+
+    <label for="monthly">How much do you spend each month?</label>
+    <input id="monthly" type="number" min="0" step="1" placeholder="$100">
+
+    <button onclick="calculate()">Show Me My Number</button>
+
+    <div id="result" class="result">
+      <div id="headline"></div>
+      <div class="big" id="annual"></div>
+      <div id="message"></div>
+      <button class="share" onclick="copyResult()">Copy My Result</button>
+      <div class="cta">Demo only. The real version could lead to a one-time product, affiliate recommendation, or personalized report.</div>
+    </div>
+
+    <div class="small">
+      This is a demonstration of the business model: short-form content creates curiosity → a person clicks the profile link → they interact with a useful tool → the experience can then offer a relevant paid product or other monetization.
+    </div>
+  </div>
+</div>
+
+<script>
+function calculate() {
+  const name = document.getElementById('name').value.trim() || 'That expense';
+  const monthly = Number(document.getElementById('monthly').value);
+  if (!monthly || monthly < 0) {
+    alert('Enter a monthly amount first.');
+    return;
+  }
+  const annual = monthly * 12;
+  document.getElementById('headline').textContent = name + ' is costing you approximately';
+  document.getElementById('annual').textContent = '$' + annual.toLocaleString() + ' per year';
+  document.getElementById('message').textContent =
+    'Now you have a number you can actually make a decision about. The next step could be a personalized savings plan or a one-time toolkit.';
+  document.getElementById('result').style.display = 'block';
+}
+function copyResult() {
+  const text = document.getElementById('annual').textContent;
+  navigator.clipboard?.writeText(text);
+  alert('Copied: ' + text);
+}
+</script>
+</body>
+</html>
